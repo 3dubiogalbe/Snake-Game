@@ -1,0 +1,48 @@
+PROGRAMAÇÃO ORIENTADA A OBJETOS
+
+Classe Snake
+│
+├── Atributos (características)
+│      │
+│      ├── self.nome
+│      ├── self.posicao(
+            o corpo da cobra vai ser uma lista de posições:
+
+                corpo = [
+                    (5, 5),
+                    (4, 5),
+                    (3, 5),
+                    (2, 5)
+                ]
+                )       
+│      └── self.pontuacao
+│
+├── Métodos (ações)
+│      │
+│      ├── mover()
+│      ├── comer()
+│      └── crescer()
+│
+└── __init__
+       │
+       └── cria o objeto com um estado inicial
+               │
+               ▼
+            Objeto
+
+
+
+Agora ela encontra uma fruta
+
+O Game detecta:
+
+cabeca == fruta.posicao
+
+Então chama:
+
+cobra.comer()
+
+E o método faz:
+
+self.pontuacao += 1
+self.deve_crescer = True

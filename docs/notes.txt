@@ -1,0 +1,49 @@
+from snake import Snake
+from fruit import Fruta
+
+
+direcao = str(input(" W A S D: ")).upper()
+
+cobra = Snake(
+    (5, 5) # CABEÇA (primeira posição)
+    )
+fruta = Fruta(
+    (8, 6)
+    )
+
+cabeca = cobra.corpo[0]
+cobra.mover(direcao)
+
+
+if cabeca == fruta.posicao:
+    cobra.comer(fruta)
+
+    ______________________________________________________________
+
+Já o __init__ é diferente.
+
+Ele não existe para executar uma ação.
+
+Ele existe para responder:
+
+"Como esse objeto nasce?"
+
+Por isso eu gosto da analogia:
+
+cobra = Snake((5, 5))
+
+O Python pergunta:
+
+"Ok, vou criar uma cobra."
+
+"Quais informações ela precisa ter ao nascer?"
+
+E aí o __init__ responde:
+
+posição
+pontuação
+estado de crescimento
+
+Pronto.
+
+Objeto criado.   
