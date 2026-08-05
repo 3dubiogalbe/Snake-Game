@@ -43,16 +43,16 @@ class Snake:
             self.corpo.pop()
                       
 
-    def comer(self, fruta):
+    def comer(self):
         """
         Aumenta a pontuação da cobra e informa à fruta que ela foi consumida.
 
         Args:
-            fruta (Fruit): fruta que foi comida pela cobra.
+            None.
         """
         self.pontuacao += 1
         self.crescer()
-        fruta.gerar()
+        
         
 
     def crescer(self):

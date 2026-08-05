@@ -1,5 +1,6 @@
 from snake import Snake
 from fruit import Fruta
+import os
 
 class Game:
 
@@ -11,7 +12,16 @@ class Game:
 
     def verificar_fruta(self):
         if self.cobra.corpo[0] == self.fruta.posicao:
-            self.cobra.comer(self.fruta)
+            self.cobra.comer()
+            self.gerar_fruta_valida()
+
+    def gerar_fruta_valida(self):
+        self.fruta.gerar()
+
+        while self.fruta.posicao in self.cobra.corpo:
+            self.fruta.gerar()        
+            
+
 
     def verificar_borda(self):
         x, y = self.cobra.corpo[0]
@@ -32,8 +42,25 @@ class Game:
                 return True
             
         return False 
+
+    def limpar_tela(self):
+        if os.name == "nt": # SE FOR WINDOWS, USAR CLS
+            os.system("cls")
+        else: # SE FOR OUTRO OS, EXECUTAR O COMANDO CLEAR
+            os.system("clear")   
+    
     def gerar_tabuleiro(self):
+        self.limpar_tela()
+
         lg, alt = self.tabuleiro
+        print(" ------ SNAKE GAME --------")
+        print("")
+        if self.cobra.pontuacao > 1: 
+            print(f"Pontuação autal: {self.cobra.pontuacao} pontos")
+        else:
+            print(f"Pontuação autal: {self.cobra.pontuacao} ponto")  
+
+
         
         for y in range(alt):
             linha = ""
@@ -41,13 +68,16 @@ class Game:
                 posicao = (x, y)
 
                 if (posicao) == self.fruta.posicao:
-                    linha += "F"
+                    linha += "[🍎]"
+                elif(posicao) == self.cobra.corpo[0]:
+                    linha += "[😛]"    
                 elif (posicao) in self.cobra.corpo:
-                    linha += "C" 
+                    linha += "[🟩]"     
                 else:
-                    linha += "."
+                    linha += "[  ]"
 
-            print(linha) 
+            print(linha)
+        print(" ------ Versão 1.1 --------")     
 
     def mostrar_menu(self):
         print("+----------------------+")
@@ -62,10 +92,9 @@ class Game:
     def executar(self):
         self.mostrar_menu()
         print("+----------------------+")
-        print("Digite X para jogar!   ")
+        opcao = input("Digite X para jogar!  ").upper()
         print("+----------------------+")
-
-        opcao = input(">> ").upper()
+         
 
         while opcao != "X":
             print("Tecla inválida, digite novamente: ")
@@ -88,8 +117,6 @@ class Game:
                 break
                
             self.cobra.mover(direcao)
-            self.verificar_fruta()
-
 
             if self.verificar_borda() == True:
                 self.game_over()
@@ -99,13 +126,29 @@ class Game:
                 self.game_over()
                 self.jogo_rodando = False
                 break
+            else:
+                self.verificar_fruta()
 
 
     def game_over(self):
 
         print("+----------------------+")
         print("|      GAME OVER       |")
-        print("+----------------------+")                
+        print("+----------------------+")
+        print(f"Sua pontuação final: {self.cobra.pontuacao} ponto(s)")
+
+        opcao = input("Digite 'S' para tentar novamente e 'Q' para finalizar: ").upper()
+
+        while opcao != "S"  and opcao != "Q":
+            print("Opção inválida!")
+            opcao = input("Digite 'S' para tentar novamente e 'Q' para finalizar: ").upper()
+
+        if opcao == "Q":
+            print("Até mais!")
+            
+        elif opcao == "S":
+            self.executar()
+                              
 
 
             
